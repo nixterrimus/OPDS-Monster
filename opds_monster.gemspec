@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
   s.name        = "opds_monster"
   s.version     = OpdsMonster::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
+  s.authors     = ["Nick Rowe"]
+  s.email       = ["nixterrimus@dcxn.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Download OPDS feeds}
+  s.description = %q{A command line tool to download opds feeds}
 
   s.rubyforge_project = "opds_monster"
 
