@@ -38,8 +38,15 @@ abort "monster requires an opds feed url" if ARGV[0].nil?
 
 url = ARGV[0]
 feed = OpdsMonster::Feed.new(url, :username => options[:username], :password => options[:password])
-feed.download_all_items do |item, success| 
-  puts "downloaded: #{item.title}" unless options[:quiet]
+
+begin
+  feed.download_all_items do |item, success| 
+    puts "downloaded: #{item.title}" unless options[:quiet]
+  end
+rescue Interrupt
+  puts "\nexiting..."
+rescue Exception => e
+  puts e
 end
 
 # puts feed.items.count
