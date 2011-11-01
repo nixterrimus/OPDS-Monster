@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+
+require 'opds_monster'
+require 'optparse'
+
+options = {}
+
+optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: monster [options] feed"
+  
+  opts.on( '-u', '--username USER', 'HTTP basic authentication user name' ) do |user|
+    options[:username] = user
+  end
+  
+  opts.on( '-p', '--password PASS', 'HTTP basic authentication password' ) do |password|
+    options[:password] = password
+  end
+  
+  opts.on( '-q', '--quiet', 'Quiet Output' ) do
+    options[:quiet] = true
+  end
+  
+  opts.on( '-h', '--help', 'Display this screen' ) do
+    puts opts
+    exit
+  end
+  
+  opts.on( '-v', '--version', 'monster version' ) do
+    puts "opds monster version #{OpdsMonster::VERSION}"
+    exit
+  end
+end
+
+optparse.parse!
+
+abort "monster requires an opds feed url" if ARGV[0].nil?
+
+url = ARGV[0]
+feed = OpdsMonster::Feed.new(url, :username => options[:username], :password => options[:password])
+feed.download_all_items do |item, success| 
+  puts "downloaded: #{item.title}" unless options[:quiet]
+end
+
+# puts feed.items.count
+# puts feed.items.count
+# 
+# feed = Feed.new("http://bookserver.archive.org/catalog/downloads.xml", :username => '', :password => '')
+# puts feed.items.count
+
